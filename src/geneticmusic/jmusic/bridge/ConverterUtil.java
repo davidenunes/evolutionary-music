@@ -11,8 +11,6 @@ import jm.JMC;
 import jm.music.data.Part;
 import jm.music.data.Phrase;
 import jm.music.data.Score;
-import org.jgap.Chromosome;
-import org.jgap.Gene;
 import org.jgap.IChromosome;
 
 /**
@@ -21,7 +19,7 @@ import org.jgap.IChromosome;
  */
 public class ConverterUtil implements JMC {
 
-    private static final int CURRENT_INSTRUMENT = ACOUSTIC_GUITAR;
+    private static final int CURRENT_INSTRUMENT = ACOUSTIC_GRAND;
 
     public static Phrase convert(IChromosome chrom) {
         Phrase result = new Phrase();

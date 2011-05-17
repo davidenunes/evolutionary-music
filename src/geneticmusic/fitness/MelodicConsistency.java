@@ -12,10 +12,18 @@ import org.jgap.Gene;
 import org.jgap.IChromosome;
 
 /**
- *
- * @author davide
+ * Reduce the jumps in a melody
+ * 
+ * @author Davide Nunes
  */
 public class MelodicConsistency implements CompositionRule {
+    
+    double weight;
+    
+    public MelodicConsistency(double weight){
+        this.weight = weight;
+    }
+    
 
     @Override
     public double evaluate(IChromosome ic) {
@@ -29,19 +37,16 @@ public class MelodicConsistency implements CompositionRule {
             double distance = currentNote.distance(nextNote);
             distance = Math.abs(distance);
 
-            result += distance < 2 ? 40 : -1;
-            
-            
-
+            result += 0.9 * (distance == 0 ? (1/genes.length*1.0) : (-1/genes.length*1.0));
         }
         
         Phrase phr = ConverterUtil.convert(ic);
         double leapCompensationTario = PhraseAnalysis.leapCompensation(phr);
         
-        result += leapCompensationTario * -10.0;
+        result += 0.1 * (1 - leapCompensationTario);
         
         
         
-        return result;
+        return weight*result;
     }
 }
