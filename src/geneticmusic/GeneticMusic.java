@@ -73,9 +73,28 @@ public class GeneticMusic implements JMC {
         
         
         
-        population.evolve();
+        
+        
+        //// evolve and evaluate
+        double currentFitness = 0.0;
+        
+        int i = 0;
+        
+        while(i<100){
+            population.evolve();
+            currentFitness = population.getFittestChromosome().getFitnessValue();
+            //System.out.println("Current fitness: "+currentFitness);
+            i++;
+        }
+        
+        
+        
+        
+        
         
         IChromosome chm = population.getFittestChromosome();
+        
+        System.out.println(chm.toString());
         Write.midi(ConverterUtil.getScore(chm), "test.mid");
         
 //        
