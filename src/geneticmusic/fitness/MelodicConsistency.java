@@ -37,13 +37,13 @@ public class MelodicConsistency implements CompositionRule {
             double distance = currentNote.distance(nextNote);
             distance = Math.abs(distance);
 
-            result += 0.9 * (distance == 0 ? (1/genes.length*1.0) : (-1/genes.length*1.0));
+            result += 0.9 *  ((6-distance)/6 * (1/(genes.length-1)*1.0));
         }
         
         Phrase phr = ConverterUtil.convert(ic);
         double leapCompensationTario = PhraseAnalysis.leapCompensation(phr);
         
-        result += 0.1 * (1 - leapCompensationTario);
+        result += 0.01 * (1 - leapCompensationTario);
         
         
         

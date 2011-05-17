@@ -30,13 +30,18 @@ public class NoteGenerator implements RandomGenerator{
      * Get a random note from the available pitches
      * or a pause
      * 
+     * TODO REENABLE THE RESTS
+     * 
      * @return note Note a random note 
      */
     public static Pitch getRandomPitch(){   
-        randomGenerator = new Random();  
-        Pitch[] possibleNotes = Pitch.values();
-        int index = randomGenerator.nextInt(possibleNotes.length);
-           
+         Pitch[] possibleNotes = Pitch.values();
+         int index = 0;
+        do{
+            randomGenerator = new Random();  
+            index = randomGenerator.nextInt(possibleNotes.length);
+        }while(possibleNotes[index] == Pitch.R);
+        
         return possibleNotes[index];
     }
     

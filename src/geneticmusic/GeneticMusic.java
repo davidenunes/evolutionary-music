@@ -46,7 +46,7 @@ public class GeneticMusic implements JMC {
         
         //**************create a sample cromossome************************
         
-        Gene[] sampleGenes = new Gene[10];
+        Gene[] sampleGenes = new Gene[20];
         for(int i=0; i< sampleGenes.length; i++)
             sampleGenes[i] = new NoteGene(cfg);
 

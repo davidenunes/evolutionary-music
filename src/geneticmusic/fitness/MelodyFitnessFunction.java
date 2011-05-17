@@ -34,10 +34,10 @@ public class MelodyFitnessFunction extends FitnessFunction{
         Note tonic = new Note(Pitch.C, 5, Alteration.N, 4);
         CompositionRule inScale = new InScaleRule(Scales.PENTATONIC_SCALE, tonic, 0.2);
         
-        RegisterFilterRule octaveFilter = new RegisterFilterRule(0.4);
+        RegisterFilterRule octaveFilter = new RegisterFilterRule(0.6);
         
-        MelodicConsistency melodyContinuity = new MelodicConsistency(0.4);
-         StructureRegularity compassReg = new StructureRegularity(0);
+        MelodicConsistency melodyContinuity = new MelodicConsistency(0.6);
+         StructureRegularity compassReg = new StructureRegularity(0.2);
         
         //--------------------------------------------------------
         
