@@ -5,13 +5,8 @@
 package geneticmusic.fitness;
 
 import geneticmusic.jmusic.bridge.ConverterUtil;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import jm.constants.Durations;
 import jm.music.data.Phrase;
-import jm.music.tools.NoteListException;
 import jm.music.tools.PhraseAnalysis;
-import jm.music.tools.QuantisationException;
 import org.jgap.IChromosome;
 
 /**

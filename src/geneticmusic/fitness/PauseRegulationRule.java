@@ -26,7 +26,7 @@ public class PauseRegulationRule implements CompositionRule{
             restCount = currentNote.getPitch().equals(Pitch.R) ? 1 : 0;
         } 
         
-        return 10 - (restCount / ic.size()*10.0);
+        return -restCount;
     }
     
 }

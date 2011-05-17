@@ -5,16 +5,10 @@
 package geneticmusic;
 
 import geneticmusic.fitness.MelodyFitnessFunction;
-import geneticmusic.genes.Alteration;
-import geneticmusic.genes.Note;
 import geneticmusic.genes.NoteGene;
 import geneticmusic.genes.NoteGenerator;
-import geneticmusic.genes.Pitch;
 import geneticmusic.jmusic.bridge.ConverterUtil;
 import jm.JMC;
-import jm.music.data.Part;
-import jm.music.data.Phrase;
-import jm.music.data.Score;
 import jm.util.Write;
 import org.jgap.Chromosome;
 import org.jgap.Configuration;
@@ -52,7 +46,7 @@ public class GeneticMusic implements JMC {
         
         //**************create a sample cromossome************************
         
-        Gene[] sampleGenes = new Gene[10];
+        Gene[] sampleGenes = new Gene[20];
         for(int i=0; i< sampleGenes.length; i++)
             sampleGenes[i] = new NoteGene(cfg);
 

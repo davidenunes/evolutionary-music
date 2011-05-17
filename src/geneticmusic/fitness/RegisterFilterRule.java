@@ -18,12 +18,28 @@ public class RegisterFilterRule implements CompositionRule {
     public double evaluate(IChromosome ic) {
         double result = 0.0;
 
-        for (Gene current : ic.getGenes()) {
-            Note currentNote = (Note) current.getAllele();
+         Gene [] genes = ic.getGenes();
+         for (int i = 0; i < genes.length - 1; i++) {
+            Note currentNote = (Note) genes[i].getAllele();
+            Note nextNote = (Note) genes[i + 1].getAllele();
+
+            
+            
+
             if (currentNote.getOctave() > 3 && currentNote.getOctave() < 5) {
-                result +=3;
+                result +=100;
             }
+            
+            if(currentNote.getOctave() == nextNote.getOctave()){
+                result +=20;
+            }
+            
+            
+
         }
+        
+        
+       
         return result;
     }
 }

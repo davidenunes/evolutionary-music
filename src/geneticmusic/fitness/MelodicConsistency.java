@@ -5,6 +5,9 @@
 package geneticmusic.fitness;
 
 import geneticmusic.genes.Note;
+import geneticmusic.jmusic.bridge.ConverterUtil;
+import jm.music.data.Phrase;
+import jm.music.tools.PhraseAnalysis;
 import org.jgap.Gene;
 import org.jgap.IChromosome;
 
@@ -26,12 +29,19 @@ public class MelodicConsistency implements CompositionRule {
             double distance = currentNote.distance(nextNote);
             distance = Math.abs(distance);
 
-            result += distance < 2 ? 2 : 0;
+            result += distance < 2 ? 40 : -1;
             
-            if(distance == 0)
-                result += 2;
+            
 
         }
+        
+        Phrase phr = ConverterUtil.convert(ic);
+        double leapCompensationTario = PhraseAnalysis.leapCompensation(phr);
+        
+        result += leapCompensationTario * -10.0;
+        
+        
+        
         return result;
     }
 }

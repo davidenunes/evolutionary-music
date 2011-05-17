@@ -32,7 +32,7 @@ public class InScaleRule implements CompositionRule{
        jm.music.data.Note [] notes = chromosome.getNoteArray();
        for(jm.music.data.Note note: notes)
         if(PhraseAnalysis.isScale(note, tonic, scale))
-                result+= (10 / (notes.length*1.0));
+                result+= (20 / (notes.length*20.0));
         else
                 result -= (1/ (notes.length*1.0));
        
