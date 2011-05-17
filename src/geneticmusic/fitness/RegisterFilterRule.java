@@ -13,10 +13,17 @@ import org.jgap.IChromosome;
  * @author davide
  */
 public class RegisterFilterRule implements CompositionRule {
+    
+    double weight = 0.0;
+    
+    public RegisterFilterRule(double weight){
+        this.weight = weight;
+    }
 
     @Override
     public double evaluate(IChromosome ic) {
         double result = 0.0;
+        double totalNotes = ic.size() * 1.0;
 
          Gene [] genes = ic.getGenes();
          for (int i = 0; i < genes.length - 1; i++) {
@@ -27,11 +34,11 @@ public class RegisterFilterRule implements CompositionRule {
             
 
             if (currentNote.getOctave() > 3 && currentNote.getOctave() < 5) {
-                result +=100;
+                result += 0.7*(1/(totalNotes));
             }
             
             if(currentNote.getOctave() == nextNote.getOctave()){
-                result +=20;
+               result += 0.3*(1/(totalNotes));
             }
             
             
@@ -40,6 +47,6 @@ public class RegisterFilterRule implements CompositionRule {
         
         
        
-        return result;
+        return weight*result;
     }
 }

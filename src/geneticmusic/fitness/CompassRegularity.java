@@ -24,7 +24,7 @@ public class CompassRegularity implements CompositionRule {
             Note currentNote = (Note) current.getAllele();
             totalDuration += currentNote.getDuration();
             
-            if ((currentNote.getDuration() == 8) && !currentNote.getPitch().equals(Pitch.R)) {
+            if ((currentNote.getDuration() == 4) && !currentNote.getPitch().equals(Pitch.R)) {
                 result += 10;
             }
         }

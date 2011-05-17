@@ -46,7 +46,7 @@ public class GeneticMusic implements JMC {
         
         //**************create a sample cromossome************************
         
-        Gene[] sampleGenes = new Gene[20];
+        Gene[] sampleGenes = new Gene[10];
         for(int i=0; i< sampleGenes.length; i++)
             sampleGenes[i] = new NoteGene(cfg);
 
@@ -74,7 +74,7 @@ public class GeneticMusic implements JMC {
         
         int i = 0;
         
-        while(i<100){
+        while(i<200){
             population.evolve();
             currentFitness = population.getFittestChromosome().getFitnessValue();
             //System.out.println("Current fitness: "+currentFitness);

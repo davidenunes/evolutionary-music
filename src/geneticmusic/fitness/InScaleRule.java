@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package geneticmusic.fitness;
 
 import geneticmusic.genes.Note;
@@ -11,34 +7,42 @@ import jm.music.tools.PhraseAnalysis;
 import org.jgap.IChromosome;
 
 /**
- *
- * @author davide
+ *  Notes belong to a given scale?
+ * 
+ * @author Davide Nunes
  */
-public class InScaleRule implements CompositionRule{
-    int [] scale;
+public class InScaleRule implements CompositionRule {
+
+    int[] scale;
     int tonic;
-    
-    public InScaleRule(int [] scale, Note tonicP){
+    double weight = 0.0;
+    /**
+     * 
+     * @param scale
+     * @param tonicP
+     * @param weight Double - 0 to 1 weight
+     */
+
+    public InScaleRule(int[] scale, Note tonicP, double weight) {
         this.scale = scale;
         this.tonic = ConverterUtil.getPitch(tonicP);
+        this.weight = weight;
     }
-    
-    
+
     @Override
     public double evaluate(IChromosome ic) {
-       double result = 0.0;
-       Phrase chromosome = ConverterUtil.convert(ic);
-       
-       jm.music.data.Note [] notes = chromosome.getNoteArray();
-       for(jm.music.data.Note note: notes)
-        if(PhraseAnalysis.isScale(note, tonic, scale))
-                result+= (20 / (notes.length*20.0));
-        else
-                result -= (1/ (notes.length*1.0));
-       
-       
-       //System.out.println("evaluating: "+result);
-       return result;
+        double result = 0.0;
+        Phrase chromosome = ConverterUtil.convert(ic);
+
+        jm.music.data.Note[] notes = chromosome.getNoteArray();
+        for (jm.music.data.Note note : notes) {
+            if (PhraseAnalysis.isScale(note, tonic, scale)) {
+                result += (1 / (notes.length * 1.0));
+            }
+        }
+
+
+        //System.out.println("evaluating: "+result);
+        return weight*result;
     }
-    
 }

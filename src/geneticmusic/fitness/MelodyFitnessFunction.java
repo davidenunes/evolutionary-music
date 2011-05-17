@@ -32,30 +32,39 @@ public class MelodyFitnessFunction extends FitnessFunction{
     private void configRules(){
         //Config in scale rule
         Note tonic = new Note(Pitch.C, 5, Alteration.N, 4);
-        CompositionRule inScale = new InScaleRule(Scales.PENTATONIC_SCALE, tonic);
+        CompositionRule inScale = new InScaleRule(Scales.PENTATONIC_SCALE, tonic, 0.5);
+        
+        RegisterFilterRule octaveFilter = new RegisterFilterRule(0.5);
+        
+        
         
         //config note density rule
-        CompositionRule densityRule = new NoteDensityRule(0.9, Durations.EIGHTH_NOTE); 
+        CompositionRule densityRule = new NoteDensityRule(0.9, Durations.C); 
         
         //rythmic variety rule
         RithmVarietyRule rithmVariety = new RithmVarietyRule();
         
         //PauseRegulationRule pauseReg = new PauseRegulationRule();
         
-        RegisterFilterRule octaveFilter = new RegisterFilterRule();
+       
         
         MelodicConsistency melodyContinuity = new MelodicConsistency();
         
         CompassRegularity compassReg = new CompassRegularity();
         
+        PausesAfterShortNotes restsAfterShort = new PausesAfterShortNotes();
+        
         //add the rules
         rules.add(inScale);
-        rules.add(densityRule);
-        rules.add(rithmVariety);
-        //rules.add(pauseReg);
         rules.add(octaveFilter);
-        rules.add(melodyContinuity);
-        rules.add(compassReg);
+        
+//        rules.add(densityRule);
+//        rules.add(rithmVariety);
+//        //rules.add(pauseReg);
+//        rules.add(octaveFilter);
+//        rules.add(melodyContinuity);
+//        rules.add(compassReg);
+//        rules.add(restsAfterShort);
         
     
     }
