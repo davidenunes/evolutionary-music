@@ -72,10 +72,12 @@ public class NoteGenerator implements RandomGenerator{
             octaves[index++] = i;
         }
         
+        int selected = 0;
+      
         
-        int selected = randomGenerator.nextInt(octaves.length);
+            selected = randomGenerator.nextInt(octaves.length);
         
-        randomGenerator = new Random(); 
+       
         return octaves[selected];     
     }
     
@@ -85,10 +87,10 @@ public class NoteGenerator implements RandomGenerator{
      */ 
     public static int getRandomDuration(){//TODO add augmentation later
         randomGenerator = new Random();
-        int [] durations = new int[6]; //1, 2, 4, 8, 16, 32 
+        int [] durations = new int[3]; //1, 2, 4, 8, 16, 32 
         
         int index = 0;
-        for(int i = 0; i<= 5; i++){
+        for(int i = 2; i<= 4; i++){
             durations[index++] = (int) Math.pow(2, i);
         }
         
@@ -96,6 +98,10 @@ public class NoteGenerator implements RandomGenerator{
         int selected = randomGenerator.nextInt(durations.length);
         
         randomGenerator = new Random(); 
+        
+        
+        
+        
         return durations[selected];     
     }
     

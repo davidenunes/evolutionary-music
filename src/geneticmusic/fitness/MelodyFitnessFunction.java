@@ -32,13 +32,15 @@ public class MelodyFitnessFunction extends FitnessFunction{
     private void configRules(){
         //Normalized rules
         Note tonic = new Note(Pitch.C, 5, Alteration.N, 4);
-        CompositionRule inScale = new InScaleRule(Scales.PENTATONIC_SCALE, tonic, 0.2);
-        
-        RegisterFilterRule octaveFilter = new RegisterFilterRule(0.6);
-        
-        MelodicConsistency melodyContinuity = new MelodicConsistency(0.6);
-         StructureRegularity compassReg = new StructureRegularity(0.2);
-        
+        CompositionRule inScale = new InScaleRule(Scales.BLUES_SCALE, tonic, 0.5);
+        MelodicConsistency melodyContinuity = new MelodicConsistency(0.5);
+        NoRepeatedNotes noRepeated = new NoRepeatedNotes(0.2);
+         RithmVarietyRule rithmVariety = new RithmVarietyRule(0.5);
+//        RegisterFilterRule octaveFilter = new RegisterFilterRule(0.5);
+//        
+//        MelodicConsistency melodyContinuity = new MelodicConsistency(0.5);
+//         StructureRegularity compassReg = new StructureRegularity(0);
+//        
         //--------------------------------------------------------
         
         
@@ -47,7 +49,7 @@ public class MelodyFitnessFunction extends FitnessFunction{
         CompositionRule densityRule = new NoteDensityRule(0.9, Durations.C); 
         
         //rythmic variety rule
-        RithmVarietyRule rithmVariety = new RithmVarietyRule();
+       
         
         //PauseRegulationRule pauseReg = new PauseRegulationRule();
         
@@ -61,11 +63,11 @@ public class MelodyFitnessFunction extends FitnessFunction{
         
         //add the rules
         rules.add(inScale);
-        rules.add(octaveFilter);
+        rules.add(noRepeated);
         rules.add(melodyContinuity);
-        rules.add(compassReg);
+//        rules.add(compassReg);
 //        rules.add(densityRule);
-//        rules.add(rithmVariety);
+       rules.add(rithmVariety);
 //        //rules.add(pauseReg);
 //        rules.add(octaveFilter);
 //        rules.add(melodyContinuity);
@@ -81,10 +83,14 @@ public class MelodyFitnessFunction extends FitnessFunction{
         double evaluation = 0.0;
         
         //apply the rules
-        for(CompositionRule rule : rules)
-            evaluation += rule.evaluate(ic); //update evaluation with positive or negative value
+        for(CompositionRule rule : rules){
+            double currentEval = rule.evaluate(ic);
+            evaluation += currentEval; //update evaluation with positive or negative value
         
-        
+//            
+//           System.out.println("rule: "+ rule.getClass().toString());
+//            System.out.println("value: "+ currentEval);
+        }
         return evaluation;
     }
     

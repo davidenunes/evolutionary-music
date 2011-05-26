@@ -124,12 +124,19 @@ public class NoteGene extends BaseGene implements Gene, Serializable{
             throw new IllegalArgumentException("needs a Note generator in the configuration");
     
         NoteGenerator generator = (NoteGenerator) rg;
-        this.note = generator.nextNote();
+        Note newNote = null;
+        //do{
+        
+            newNote = generator.nextNote();
+       //}while(newNote.distance(this.note) < 2);
+        
+        
+        this.note = newNote;
     }
 
     @Override
     public void applyMutation(int i, double d) {
-        //DO NOTHING
+       setToRandomValue(new NoteGenerator());
     }
 
     @Override

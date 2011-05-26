@@ -9,6 +9,9 @@ import geneticmusic.genes.NoteGene;
 import geneticmusic.genes.NoteGenerator;
 import geneticmusic.jmusic.bridge.ConverterUtil;
 import jm.JMC;
+import jm.music.data.Part;
+import jm.music.data.Phrase;
+import jm.music.data.Score;
 import jm.util.Write;
 import org.jgap.Chromosome;
 import org.jgap.Configuration;
@@ -50,6 +53,9 @@ public class GeneticMusic implements JMC {
         for(int i=0; i< sampleGenes.length; i++)
             sampleGenes[i] = new NoteGene(cfg);
 
+      
+        
+        
         Chromosome sampleChromosome = new Chromosome(cfg, sampleGenes);
 
         cfg.setSampleChromosome(sampleChromosome);
@@ -73,24 +79,31 @@ public class GeneticMusic implements JMC {
         double currentFitness = 0.0;
         
         int i = 0;
+        double lastFitness = 0.0;
         
-        while(i<1000){
+        
+        do{
+            lastFitness = currentFitness;
             population.evolve();
             currentFitness = population.getFittestChromosome().getFitnessValue();
             //System.out.println("Current fitness: "+currentFitness);
             i++;
-        }
+            //System.out.println(i);
+        }while(i<100);
         
         
         
         
-        
-        
+       
         IChromosome chm = population.getFittestChromosome();
+        
         
         System.out.println(chm.toString());
         Write.midi(ConverterUtil.getScore(chm), "test.mid");
         
+        
+//       
+//        
 //        
 //        
 //        int[] pitchSop = {C5, G4, E4, D4, G4, A4, C4, D4, E4, D4, F4, E4, A4, G4, E4};
@@ -117,10 +130,10 @@ public class GeneticMusic implements JMC {
 //
 //
 //
-//        Part s = new Part("Soprano", ACOUSTIC_GUITAR, 1);
-//        Part a = new Part("Alto", ACOUSTIC_GUITAR, 2);
-//        Part t = new Part("Tenor", ACOUSTIC_GUITAR, 3);
-//        Part b = new Part("Bass", ACOUSTIC_GUITAR, 4);
+//        Part s = new Part("Soprano", VOICE, 1);
+//        Part a = new Part("Alto", VOICE, 2);
+//        Part t = new Part("Tenor", VOICE, 3);
+//        Part b = new Part("Bass", VOICE, 4);
 //
 //
 //        // add the phrases to the parts

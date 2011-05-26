@@ -42,7 +42,7 @@ public class ConverterUtil implements JMC {
 
     public static Score getScore(IChromosome chrm) {
         Phrase ph = convert(chrm);
-        Part prt = new Part("instrument 1", ACOUSTIC_GUITAR, 1);
+        Part prt = new Part("instrument 1", VOICE, 1);
         prt.addPhrase(ph);
 
         Score result = new Score("converted score");
