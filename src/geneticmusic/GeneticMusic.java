@@ -37,12 +37,7 @@ public class GeneticMusic implements JMC {
 
         //configuration object
         Configuration cfg = new DefaultConfiguration();
-
-        //fet fitness function
         FitnessFunction fitnessF = new MelodyFitnessFunction();
-
-
-        //setup fitness function in the configuration object
         cfg.setFitnessFunction(fitnessF);
 
 

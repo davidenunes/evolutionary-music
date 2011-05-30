@@ -16,21 +16,36 @@ import org.jgap.RandomGenerator;
 import org.jgap.UnsupportedRepresentationException;
 
 /**
- * Class that represents a musical note as a gene
- * to build a melody chromosome 
+ * Each chorale gene represents a quarcher note in terms of rithm
+ * each gene represents a part set of notes for the current tempo in the measure
  * 
+ * the notes can be quarcher 4 or 
+ * semiquarcher 8, so each gene can have 2 notes maximum 
+ * 
+ * //NOTE for simplicity reasons the notes are all quarchers for now
  * 
  * @author Davide Nunes
  */
-public class NoteGene extends BaseGene implements Gene, Serializable{
-    private Note note;
+public class ChoraleGene extends BaseGene implements Gene, Serializable{
+  
+    
+    private Note  soprano;
+    private Note  alto;
+    private Note  tenor;
+    private Note  bass;
   
     
     
         
     //constructor, creates a random note randomizer over all the parameters
-    public NoteGene(Configuration conf) throws InvalidConfigurationException{
-        this(conf,new NoteGenerator().nextNote());   
+    public ChoraleGene(Configuration conf) throws InvalidConfigurationException{
+      
+        
+        this(conf, 
+                NoteGenerator.getRandomNote(4, 5, 4, 4), 
+                NoteGenerator.getRandomNote(4, 5, 4, 4), 
+                NoteGenerator.getRandomNote(4, 5, 4, 4), 
+                NoteGenerator.getRandomNote(4, 5, 4, 4));  
     }
     
     
@@ -45,16 +60,22 @@ public class NoteGene extends BaseGene implements Gene, Serializable{
      * 
      * @throws InvalidConfigurationException 
      */
-    public NoteGene(Configuration conf, Note note) throws InvalidConfigurationException{
+    public ChoraleGene(Configuration conf, Note soprano, 
+                                           Note alto,
+                                           Note tenor,
+                                           Note bass    ) throws InvalidConfigurationException{
         super(conf);
-        this.note = note;
+        this.soprano = soprano;
+        this.alto = alto;
+        this.tenor = tenor;
+        this.bass = bass;
     }
     
     
 
     @Override
     protected Object getInternalValue() {
-        return this.note;
+        return new Note[] {soprano, alto, tenor, bass};
     }
 
     
@@ -67,7 +88,7 @@ public class NoteGene extends BaseGene implements Gene, Serializable{
         try {
         // Construct a NoteGene with the values from the currently created gene
         // -------------------------------------------------------------
-        return new NoteGene(getConfiguration(),this.note); 
+        return new ChoraleGene(getConfiguration(),soprano,alto,tenor,bass); 
               
       } catch (InvalidConfigurationException ex) {
             throw new IllegalStateException(ex.getMessage());
@@ -79,46 +100,29 @@ public class NoteGene extends BaseGene implements Gene, Serializable{
 
     @Override
     public void setAllele(Object o) {
-        this.note = (Note) o;
+        Note[] notes = (Note []) o;
+        this.soprano = notes[0];
+        this.alto = notes[1];
+        this.tenor = notes[2];
+        this.bass = notes[3];
+        
     }
 
     
     //for persistence in XML 
     @Override
     public String getPersistentRepresentation() throws UnsupportedOperationException {
-        return note.toString();
+        return "( "+soprano.toString()+" | "+
+                   alto.toString()+" | "+
+                   tenor.toString()+" | "+
+                   bass.toString()+
+                ") ";
     }
 
     //note parse from XML persistence
     @Override
     public void setValueFromPersistentRepresentation(String string) throws UnsupportedOperationException, UnsupportedRepresentationException {
-        String retrieved = string;
-        
-        //retrieve pitch
-        String pitchS = retrieved.substring(0, 1);
-        Pitch pitch = Pitch.valueOf(pitchS);
-        
-     
-        Alteration alteration = null;
-        int octave = 0;
-        
-        
-        if(!pitch.equals(Pitch.R)){
-            //retrieve alteration
-            String alterationS =  retrieved.substring(2,3);
-            alteration = Alteration.valueOf(alterationS);
-            
-            //retrieve octave
-            String octaveS = retrieved.substring(4,5);
-            octave = Integer.parseInt(octaveS);
-        }
-        
-        //retrieve duration
-        String durationS = retrieved.substring(6);
-        int duration = Integer.parseInt(durationS);
-        
-        this.note = new Note(pitch, octave, alteration, duration);
-        
+      //TODO implements this if needed
     }
 
     @Override
@@ -127,14 +131,13 @@ public class NoteGene extends BaseGene implements Gene, Serializable{
             throw new IllegalArgumentException("needs a Note generator in the configuration");
     
         NoteGenerator generator = (NoteGenerator) rg;
-        Note newNote = null;
-        //do{
+        this.soprano = generator.nextNote(4, 5, 4, 4); 
+        this.alto = generator.nextNote(4, 5, 4, 4); 
+        this.tenor = generator.nextNote(4, 5, 4, 4); 
+        this.bass = generator.nextNote(4, 5, 4, 4);  
         
-            newNote = generator.nextNote();
-       //}while(newNote.distance(this.note) < 2);
         
         
-        this.note = newNote;
     }
 
     @Override
@@ -144,9 +147,12 @@ public class NoteGene extends BaseGene implements Gene, Serializable{
 
     @Override
     public int compareTo(Object t) {
-        NoteGene other = (NoteGene) t;
+        ChoraleGene other = (ChoraleGene) t;
         
-        return (int) this.note.distance((Note) other.getAllele());
+        Note[] otherNotes = (Note[]) other.getAllele();
+        
+        
+        return (int) soprano.distance(otherNotes[0]);
     }
     
 }

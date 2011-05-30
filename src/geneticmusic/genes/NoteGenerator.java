@@ -4,6 +4,9 @@
  */
 package geneticmusic.genes;
 
+import geneticmusic.domain.Pitch;
+import geneticmusic.domain.Alteration;
+import geneticmusic.domain.Note;
 import java.util.Random;
 import org.jgap.RandomGenerator;
 
@@ -18,9 +21,29 @@ public class NoteGenerator implements RandomGenerator{
     public Note nextNote(){
         return new Note(
                 getRandomPitch(), 
-                getRandomOctave(), 
+                getRandomOctave(3,5), 
                 getRandomAlteration(),
-                getRandomDuration());
+                getRandomDuration(2,4));
+    }
+    
+    public Note nextNote(int minOctave, int maxOctave, int minRithm, int maxRithm){
+         return new Note(
+                getRandomPitch(), 
+                getRandomOctave(3,5), 
+                getRandomAlteration(),
+                getRandomDuration(2,4));
+    
+    
+    }
+    
+    public static Note getRandomNote(int minOctave, int maxOctave, int minRithm, int maxRithm){
+         return new Note(
+                getRandomPitch(), 
+                getRandomOctave(3,5), 
+                getRandomAlteration(),
+                getRandomDuration(2,4));
+    
+    
     }
     
     
@@ -63,12 +86,16 @@ public class NoteGenerator implements RandomGenerator{
      * return a randomOctave
      * 
      */ 
-    public static int getRandomOctave(){
+    public static int getRandomOctave(int minOctave, int maxOctave){
+        if(minOctave < Note.MIN_OCTAVE || maxOctave > Note.MAX_OCTAVE)
+            //do nothing for now
+        
+        
         randomGenerator = new Random();
-        int [] octaves = new int[(Note.MAX_OCTAVE-Note.MIN_OCTAVE) + 1];
+        int [] octaves = new int[maxOctave-minOctave + 1];
         
         int index = 0;
-        for(int i = Note.MIN_OCTAVE; i<= Note.MAX_OCTAVE; i++){
+        for(int i = minOctave; i<= maxOctave; i++){
             octaves[index++] = i;
         }
         
@@ -82,16 +109,23 @@ public class NoteGenerator implements RandomGenerator{
     }
     
     /**
-     * only generates regular durations for now
+     * Regenerates durations between min and max
      * 
      */ 
-    public static int getRandomDuration(){//TODO add augmentation later
+    public static int getRandomDuration(int min, int max){//TODO add augmentation points later
+        if(min % 2 != 0 || max % 2 != 0 || min < 1 || max > 32)
+           //do nothing for now
+            
+        
+        
         randomGenerator = new Random();
-        int [] durations = new int[3]; //1, 2, 4, 8, 16, 32 
+        
+        int numDurations = (int) (log2(max) - log2(min) + 1);
+        int [] durations = new int[numDurations]; //1, 2, 4, 8, 16, 32 
         
         int index = 0;
-        for(int i = 2; i<= 4; i++){
-            durations[index++] = (int) Math.pow(2, i);
+        for(int i = min; i<= max; i=i*2){
+            durations[index++] = i;
         }
         
         
@@ -136,6 +170,12 @@ public class NoteGenerator implements RandomGenerator{
     @Override
     public boolean nextBoolean() {
         return randomGenerator.nextBoolean();
+    }
+    
+    
+    //util log2
+    private static double log2(double n){
+        return Math.log(n)/Math.log(2);
     }
     
 }

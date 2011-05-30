@@ -4,8 +4,8 @@
  */
 package geneticmusic.jmusic.bridge;
 
-import geneticmusic.genes.Note;
-import geneticmusic.genes.Pitch;
+import geneticmusic.domain.Note;
+import geneticmusic.domain.Pitch;
 import java.lang.reflect.Field;
 import jm.JMC;
 import jm.music.data.Part;
@@ -19,7 +19,82 @@ import org.jgap.IChromosome;
  */
 public class ConverterUtil implements JMC {
 
-    private static final int CURRENT_INSTRUMENT = ACOUSTIC_GRAND;
+    private static final int CURRENT_INSTRUMENT = HARPSICHORD;
+    
+    
+    public static Phrase[] convertChorale(IChromosome cm){
+        Phrase soprano = new Phrase();
+        Phrase alto = new Phrase();
+        Phrase tenor = new Phrase();
+        Phrase bass = new Phrase();
+
+
+        //get pitches and duration
+        int[] notess = new int[cm.size()];
+        int[] notesa = new int[cm.size()];
+        int[] notest = new int[cm.size()];
+        int[] notesb = new int[cm.size()];
+        
+        double[] rithms = new double[cm.size()];
+        double[] rithma = new double[cm.size()];
+        double[] rithmt = new double[cm.size()];
+        double[] rithmb = new double[cm.size()];
+        
+        
+        
+        for (int i = 0; i < notess.length; i++) {
+            Note[] currentChord = (Note[]) cm.getGene(i).getAllele();
+            notess[i] = getPitch(currentChord[0]);
+            notesa[i] = getPitch(currentChord[1]);
+            notest[i] = getPitch(currentChord[2]);
+            notesb[i] = getPitch(currentChord[3]);
+            
+            rithms[i] = getRythm(currentChord[0]);
+            rithma[i] = getRythm(currentChord[1]);
+            rithmt[i] = getRythm(currentChord[2]);
+            rithmb[i] = getRythm(currentChord[3]);
+           
+        }
+        soprano.addNoteList(notess, rithms);
+        alto.addNoteList(notesa, rithma);
+        tenor.addNoteList(notest, rithmt);
+        bass.addNoteList(notesb, rithmb);
+
+
+
+        return new Phrase[]{soprano, alto, tenor, bass};
+    
+    }
+    
+    public static Score getChoraleScore(IChromosome chrm) {
+        Phrase[] phrases = convertChorale(chrm);
+        Part soprano = new Part("soprano", CURRENT_INSTRUMENT, 1);
+        soprano.addPhrase(phrases[0]);
+        
+        Part alto = new Part("alto", CURRENT_INSTRUMENT, 1);
+        alto.addPhrase(phrases[1]);
+        
+        Part tenor = new Part("tenor", CURRENT_INSTRUMENT, 1);
+        tenor.addPhrase(phrases[2]);
+        
+        Part bass = new Part("bass", CURRENT_INSTRUMENT, 1);
+        bass.addPhrase(phrases[3]);
+        
+       
+
+        Score result = new Score("chorale score");
+        result.addPart(soprano);
+        result.addPart(alto);
+        result.addPart(tenor);
+        result.addPart(bass);
+
+        return result;
+
+    }
+    
+    
+    
+    
 
     public static Phrase convert(IChromosome chrom) {
         Phrase result = new Phrase();
@@ -42,7 +117,7 @@ public class ConverterUtil implements JMC {
 
     public static Score getScore(IChromosome chrm) {
         Phrase ph = convert(chrm);
-        Part prt = new Part("instrument 1", VOICE, 1);
+        Part prt = new Part("instrument 1", CURRENT_INSTRUMENT, 1);
         prt.addPhrase(ph);
 
         Score result = new Score("converted score");
