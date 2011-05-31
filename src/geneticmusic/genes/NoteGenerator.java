@@ -23,7 +23,7 @@ public class NoteGenerator implements RandomGenerator{
                 getRandomPitch(), 
                 getRandomOctave(3,5), 
                 getRandomAlteration(),
-                getRandomDuration(2,4));
+                getRandomDuration(4,16));
     }
     
     public Note nextNote(int minOctave, int maxOctave, int minRithm, int maxRithm){

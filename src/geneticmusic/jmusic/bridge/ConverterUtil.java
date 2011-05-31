@@ -4,6 +4,7 @@
  */
 package geneticmusic.jmusic.bridge;
 
+import geneticmusic.domain.Alteration;
 import geneticmusic.domain.Note;
 import geneticmusic.domain.Pitch;
 import java.lang.reflect.Field;
@@ -20,6 +21,9 @@ import org.jgap.IChromosome;
 public class ConverterUtil implements JMC {
 
     private static final int CURRENT_INSTRUMENT = HARPSICHORD;
+    
+    
+    
     
     
     public static Phrase[] convertChorale(IChromosome cm){
@@ -137,9 +141,15 @@ public class ConverterUtil implements JMC {
             if (note.getPitch().equals(Pitch.R)) {
                 target = "REST";
             } else {
-                target = pitch.concat(octave);
+                if(note.getAlteration().equals(Alteration.N))
+                    target = pitch.concat(octave);
+                else if(note.getAlteration().equals(Alteration.F))
+                    target = pitch.concat("F").concat(octave);
+                else
+                    target = pitch.concat("S").concat(octave);
             }
 
+            
 
             Class cClass = ConverterUtil.class;
             Field field = cClass.getField(target);
@@ -151,6 +161,51 @@ public class ConverterUtil implements JMC {
         }
         return 0;
     }
+    
+    //used to check on correct chords
+    public static int getNormalizedPitch(Note note) {
+        try {
+            String pitch = note.getPitch().toString();
+            String octave = new Integer(note.getOctave()).toString();
+
+            String target = null;
+
+            if (note.getPitch().equals(Pitch.R)) {
+                target = "REST";
+            } else {
+                if(note.getAlteration().equals(Alteration.N))
+                    target = pitch.concat(octave);
+                else if(note.getAlteration().equals(Alteration.F))
+                    target = pitch.concat("F").concat(octave);
+                else
+                    target = pitch.concat("S").concat(octave);
+            }
+
+            
+
+            Class cClass = ConverterUtil.class;
+            Field field = cClass.getField(target);
+            Integer value = (Integer) field.get(null);
+
+            return value.intValue()%12;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+    
+     public static int getNormalizedPitch(int pitch) {
+        return pitch % 12;
+     }
+     
+      public static int getNormalizedPitch(jm.music.data.Note note) {
+        return note.getPitch() % 12;
+     }
+     
+     
+    
+    
+    
 
     public static double getRythm(Note note) {
         double result = 0.0;

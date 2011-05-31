@@ -28,7 +28,9 @@ import org.jgap.Genotype;
 import org.jgap.IChromosome;
 import org.jgap.InvalidConfigurationException;
 import org.jgap.UnsupportedRepresentationException;
+import org.jgap.impl.BestChromosomesSelector;
 import org.jgap.impl.DefaultConfiguration;
+import org.jgap.impl.TournamentSelector;
 
 /**
  *
@@ -63,10 +65,15 @@ public class GeneticMusicChorale implements JMC {
         cfg.setSampleChromosome(sampleChromosome);
         //***************************************************************
         
-        
+        System.out.println("GA configuration:");
         System.out.println("Percentage selected from previous generations:"+cfg.getSelectFromPrevGen());
+        //cfg.setNaturalSelector(new BestChromosomesSelector(cfg, 0.7));
+        cfg.setNaturalSelector(new TournamentSelector(cfg, 10, 0.3));
+        System.out.println("Selection Operator: " + cfg.getNaturalSelector());
+        
+        
         //set population size
-        cfg.setPopulationSize( 200 );
+        cfg.setPopulationSize( 30 );
         
         //set note generator
         cfg.setRandomGenerator(new NoteGenerator());

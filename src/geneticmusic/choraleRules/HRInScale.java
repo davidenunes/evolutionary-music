@@ -27,6 +27,10 @@ public class HRInScale extends AbstractCompositionRule implements JMC {
         super(weight);
         this.scale = scale;
         this.tonic = ConverterUtil.getPitch(tonicP);
+        
+        System.out.println("Scale: ");
+        for(int n : scale)
+            System.out.print(n+",");
     }
 
     @Override
