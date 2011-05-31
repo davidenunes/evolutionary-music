@@ -15,26 +15,21 @@ import geneticmusic.domain.Pitch;
 import java.util.LinkedList;
 import jm.constants.Durations;
 import jm.constants.Scales;
-import org.jgap.FitnessFunction;
-import org.jgap.IChromosome;
 
 /**
  *
  * @author Davide Nunes
  */
-public class MelodyFitnessFunction extends FitnessFunction{
+public class MelodyFitnessFunction extends AbstractCompositionFitness{
     
-    LinkedList<CompositionRule> rules ;
+   
     
     public MelodyFitnessFunction(){
-        //init rule list
-        this.rules = new LinkedList<CompositionRule>();
-        
-        //configure all the rules 
-        configRules();
+       super();
     }
     
-    private void configRules(){
+    @Override
+    protected void configRules(){
         //Normalized rules
         Note tonic = new Note(Pitch.C, 5, Alteration.N, 4);
         InScaleRule inScale = new InScaleRule(Scales.MAJOR_SCALE, tonic, 0.5);
@@ -82,20 +77,6 @@ public class MelodyFitnessFunction extends FitnessFunction{
     }
     
 
-    @Override
-    protected double evaluate(IChromosome ic) {
-        double evaluation = 0.0;
-        
-        //apply the rules
-        for(CompositionRule rule : rules){
-            double currentEval = rule.evaluate(ic);
-            evaluation += currentEval; //update evaluation with positive or negative value
-        
-//            
-//           System.out.println("rule: "+ rule.getClass().toString());
-//            System.out.println("value: "+ currentEval);
-        }
-        return evaluation;
-    }
+   
     
 }

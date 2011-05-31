@@ -27,11 +27,7 @@ public class NoteGenerator implements RandomGenerator{
     }
     
     public Note nextNote(int minOctave, int maxOctave, int minRithm, int maxRithm){
-         return new Note(
-                getRandomPitch(), 
-                getRandomOctave(3,5), 
-                getRandomAlteration(),
-                getRandomDuration(2,4));
+         return getRandomNote(minOctave, maxOctave, minRithm, maxRithm);
     
     
     }
@@ -39,9 +35,9 @@ public class NoteGenerator implements RandomGenerator{
     public static Note getRandomNote(int minOctave, int maxOctave, int minRithm, int maxRithm){
          return new Note(
                 getRandomPitch(), 
-                getRandomOctave(3,5), 
+                getRandomOctave(minOctave,maxOctave), 
                 getRandomAlteration(),
-                getRandomDuration(2,4));
+                getRandomDuration(minRithm,maxRithm));
     
     
     }

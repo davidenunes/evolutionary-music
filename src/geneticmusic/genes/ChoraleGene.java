@@ -4,8 +4,6 @@
  */
 package geneticmusic.genes;
 
-import geneticmusic.domain.Pitch;
-import geneticmusic.domain.Alteration;
 import geneticmusic.domain.Note;
 import java.io.Serializable;
 import org.jgap.BaseGene;
@@ -43,9 +41,9 @@ public class ChoraleGene extends BaseGene implements Gene, Serializable{
         
         this(conf, 
                 NoteGenerator.getRandomNote(4, 5, 4, 4), 
-                NoteGenerator.getRandomNote(4, 5, 4, 4), 
-                NoteGenerator.getRandomNote(4, 5, 4, 4), 
-                NoteGenerator.getRandomNote(4, 5, 4, 4));  
+                NoteGenerator.getRandomNote(3, 5, 4, 4), 
+                NoteGenerator.getRandomNote(3, 4, 4, 4), 
+                NoteGenerator.getRandomNote(2, 4, 4, 4));  
     }
     
     
@@ -118,6 +116,11 @@ public class ChoraleGene extends BaseGene implements Gene, Serializable{
                    bass.toString()+
                 ") ";
     }
+    
+    @Override
+    public String toString(){
+        return getPersistentRepresentation();
+    }
 
     //note parse from XML persistence
     @Override
@@ -132,9 +135,9 @@ public class ChoraleGene extends BaseGene implements Gene, Serializable{
     
         NoteGenerator generator = (NoteGenerator) rg;
         this.soprano = generator.nextNote(4, 5, 4, 4); 
-        this.alto = generator.nextNote(4, 5, 4, 4); 
-        this.tenor = generator.nextNote(4, 5, 4, 4); 
-        this.bass = generator.nextNote(4, 5, 4, 4);  
+        this.alto = generator.nextNote(3, 5, 4, 4); 
+        this.tenor = generator.nextNote(3, 4, 4, 4); 
+        this.bass = generator.nextNote(2, 4, 4, 4);  
         
         
         

@@ -8,8 +8,18 @@ import geneticmusic.fitness.ChoraleFitnessFunction;
 import geneticmusic.genes.ChoraleGene;
 import geneticmusic.genes.NoteGenerator;
 import geneticmusic.jmusic.bridge.ConverterUtil;
+import javax.swing.JFrame;
 import jm.JMC;
 import jm.util.Write;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.xy.DefaultXYDataset;
+import org.jfree.data.xy.XYBarDataset;
+import org.jfree.data.xy.XYDataset;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
 import org.jgap.Chromosome;
 import org.jgap.Configuration;
 import org.jgap.FitnessFunction;
@@ -53,8 +63,10 @@ public class GeneticMusicChorale implements JMC {
         cfg.setSampleChromosome(sampleChromosome);
         //***************************************************************
         
+        
+        System.out.println("Percentage selected from previous generations:"+cfg.getSelectFromPrevGen());
         //set population size
-        cfg.setPopulationSize( 500 );
+        cfg.setPopulationSize( 200 );
         
         //set note generator
         cfg.setRandomGenerator(new NoteGenerator());
@@ -73,18 +85,43 @@ public class GeneticMusicChorale implements JMC {
         int i = 0;
         double lastFitness = 0.0;
         
+        /***********************PRESENT DATA ON A CHART************************/
+        XYSeries fitnessSeries = new XYSeries("Fittest Fitness");
+        
+       
+         XYSeriesCollection dataset = new XYSeriesCollection(fitnessSeries);
+        
+         
+         JFreeChart fitnessChart = ChartFactory.createXYLineChart("Fittest Fitness Evolution", 
+                                                                "Generation", 
+                                                                "Fitness", dataset, 
+                                                                PlotOrientation.VERTICAL,
+                                                                true, //legend
+                                                                true, //tooltips
+                                                                false); //url
+        
+        //add chart to panel
+       ChartPanel chartPanel = new ChartPanel(fitnessChart);
+       JFrame chartFrame = new JFrame("Fittests Fitness");
+       chartFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+       chartFrame.setContentPane(chartPanel);
+       chartFrame.pack();
+       chartFrame.setVisible(true);
         
         do{
             lastFitness = currentFitness;
             population.evolve();
             currentFitness = population.getFittestChromosome().getFitnessValue();
+            
+            fitnessSeries.add(i, currentFitness);//update series
             //System.out.println("Current fitness: "+currentFitness);
             i++;
+            
             //System.out.println(i);
         }while(i<100);
         
-        
-        
+       
+       
         
        
         IChromosome chm = population.getFittestChromosome();
