@@ -53,7 +53,7 @@ public class GeneticMusicChorale implements JMC {
         
         //**************create a sample cromossome************************
         
-        Gene[] sampleGenes = new Gene[8];
+        Gene[] sampleGenes = new Gene[4];
         for(int i=0; i< sampleGenes.length; i++)
             sampleGenes[i] = new ChoraleGene(cfg);
 
@@ -67,13 +67,13 @@ public class GeneticMusicChorale implements JMC {
         
         System.out.println("GA configuration:");
         System.out.println("Percentage selected from previous generations:"+cfg.getSelectFromPrevGen());
-        //cfg.setNaturalSelector(new BestChromosomesSelector(cfg, 0.7));
-        cfg.setNaturalSelector(new TournamentSelector(cfg, 10, 0.3));
+        //cfg.setNaturalSelector(new BestChromosomesSelector(cfg, 1));
+        cfg.setNaturalSelector(new TournamentSelector(cfg, 20, 0.7));
         System.out.println("Selection Operator: " + cfg.getNaturalSelector());
         
         
         //set population size
-        cfg.setPopulationSize( 30 );
+        cfg.setPopulationSize( 40 );
         
         //set note generator
         cfg.setRandomGenerator(new NoteGenerator());
@@ -125,7 +125,7 @@ public class GeneticMusicChorale implements JMC {
             i++;
             
             //System.out.println(i);
-        }while(i<100);
+        }while(i<1000);
         
        
        

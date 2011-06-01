@@ -23,6 +23,73 @@ public class ConverterUtil implements JMC {
     private static final int CURRENT_INSTRUMENT = HARPSICHORD;
     
     
+    public static Phrase[] concertChord(Note[] notes){
+        Phrase soprano = new Phrase();
+        Phrase alto = new Phrase();
+        Phrase tenor = new Phrase();
+        Phrase bass = new Phrase();
+        
+         int[] notess = new int[1];
+        int[] notesa = new int[1];
+        int[] notest = new int[1];
+        int[] notesb = new int[1];
+        
+        double[] rithms = new double[1];
+        double[] rithma = new double[1];
+        double[] rithmt = new double[1];
+        double[] rithmb = new double[1];
+        
+         notess[0] = getPitch(notes[0]);
+         notesa[0] = getPitch(notes[1]);
+         notest[0] = getPitch(notes[2]);
+         notesb[0] = getPitch(notes[3]);
+         
+            rithms[0] = getRythm(notes[0]);
+            rithma[0] = getRythm(notes[1]);
+            rithmt[0] = getRythm(notes[2]);
+            rithmb[0] = getRythm(notes[3]);
+    
+            
+             soprano.addNoteList(notess, rithms);
+        alto.addNoteList(notesa, rithma);
+        tenor.addNoteList(notest, rithmt);
+        bass.addNoteList(notesb, rithmb);
+
+
+
+        return new Phrase[]{soprano, alto, tenor, bass};
+    
+    }
+    
+    
+    
+    public static Score getChordScore(Phrase[] chord) {
+        Phrase[] phrases = chord;
+        Part soprano = new Part("soprano", CURRENT_INSTRUMENT, 1);
+        soprano.addPhrase(phrases[0]);
+        
+        Part alto = new Part("alto", CURRENT_INSTRUMENT, 1);
+        alto.addPhrase(phrases[1]);
+        
+        Part tenor = new Part("tenor", CURRENT_INSTRUMENT, 1);
+        tenor.addPhrase(phrases[2]);
+        
+        Part bass = new Part("bass", CURRENT_INSTRUMENT, 1);
+        bass.addPhrase(phrases[3]);
+        
+       
+
+        Score result = new Score("chorale score");
+        result.addPart(soprano);
+        result.addPart(alto);
+        result.addPart(tenor);
+        result.addPart(bass);
+
+        return result;
+
+    }
+    
+    
     
     
     

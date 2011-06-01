@@ -134,10 +134,23 @@ public class ChoraleGene extends BaseGene implements Gene, Serializable{
             throw new IllegalArgumentException("needs a Note generator in the configuration");
     
         NoteGenerator generator = (NoteGenerator) rg;
-        this.soprano = generator.nextNote(4, 5, 4, 4); 
-        this.alto = generator.nextNote(3, 5, 4, 4); 
-        this.tenor = generator.nextNote(3, 4, 4, 4); 
-        this.bass = generator.nextNote(2, 4, 4, 4);  
+        
+        int noteChoosen = generator.nextInt(4);
+        switch(noteChoosen){
+            case 0: this.soprano = generator.nextNote(4, 5, 4, 4); 
+                break;
+            case 1:  this.alto = generator.nextNote(3, 5, 4, 4); 
+                break;
+            case 2: this.tenor = generator.nextNote(3, 4, 4, 4); 
+                break;
+            case 3:  this.bass = generator.nextNote(2, 4, 4, 4);  
+                break;
+        }
+        
+        
+       
+        
+       
         
         
         

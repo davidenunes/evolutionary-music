@@ -36,4 +36,45 @@ public class HarmonicUtils {
         return false;
     }
     
+    
+    /*
+     * Verifies if the chord passed (Note[] notes) has the notes on the chord int[] chord presented
+     * TODO add the omited 5th later
+     * must have all notes from the chord
+     */
+    public static boolean isValidChord(Note[] notes, int[] chord){
+         
+        for(int n : chord){//for each note in the chord verify if there is one in the note array
+            boolean found = false; 
+            for(Note note : notes){
+                 if(ConverterUtil.getNormalizedPitch(note) == n)
+                     found = true;
+            }
+            if(!found) //if one not of the chord is not in the note array we dont have the whole chord
+                return false;
+         }
+        return true;
+    
+    }
+    
+    
+    /**
+     * Returns true if the Note[] notes represent a valid chord
+     * for any of the scale chords
+     * 
+     * 
+     * @param notes
+     * @param scale
+     * @param tonic
+     * @return 
+     */
+    public static boolean isValidChord(Note[] notes, int [] scale, int tonic){
+        int[][] possibleChords = possibleChords(tonic, scale);
+        for(int [] chord : possibleChords){
+            if(isValidChord(notes, chord))
+                return true;
+        }
+        return false;  
+    }
+    
 }
