@@ -45,4 +45,9 @@ public class VLMelodyContinuity extends AbstractCompositionRule {
 
 
     }
+
+    @Override
+    public String getName() {
+        return "Melody Continuity Rule";
+    }
 }

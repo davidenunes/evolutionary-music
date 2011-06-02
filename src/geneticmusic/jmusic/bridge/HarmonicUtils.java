@@ -11,6 +11,34 @@ import geneticmusic.domain.Note;
  * @author davide
  */
 public class HarmonicUtils {
+    public static boolean isFundamentalDuplicated(Note[] notes, int[] chord){
+        boolean duplicated = false;
+        int count = 0;
+        for(Note note: notes){
+            int normPitch = ConverterUtil.getNormalizedPitch(note);
+            if(normPitch == chord[0])
+                count++;
+            
+        
+        }
+        if(count == 2)
+            duplicated = true;
+        
+        
+        
+        return duplicated;
+    
+    
+    }
+    
+    public static int[] findChord(Note[] notes, int tonic, int[] scale){
+        int[][] possibleChords = possibleChords(tonic, scale);
+        for(int[] chord : possibleChords){
+            if(isValidChord(notes, chord))
+                return chord;
+        }
+        return null;
+    }
     
     public static int[][] possibleChords (int tonic, int[] scale){
         int [][] chords = new int[scale.length][3];

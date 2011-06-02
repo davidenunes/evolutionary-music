@@ -12,41 +12,42 @@ import org.jgap.Gene;
 import org.jgap.IChromosome;
 
 /**
- * Harmonic consistency rule
- * 
- * gives a bonus to correclty constructed chords
- * 
- * @author davide nunes
+ *
+ * @author davide
  */
-public class HCValidChords extends AbstractCompositionRule{
-    private int[] scale;
+public class HCDuplicateFundamental extends AbstractCompositionRule{
     private int tonic;
+    private int[] scale;
     
-    public HCValidChords(double weight, int[] scale, Note tonic){
+    public HCDuplicateFundamental(double weight, Note tonic, int[] scale){
         super(weight);
-        this.scale = scale;
         this.tonic = ConverterUtil.getPitch(tonic);
+        this.scale = scale;
     }
     
-    
+
     @Override
     protected double evaluation(IChromosome ic) {
         double result = 0.0;
-        
         Gene[] genes = ic.getGenes();
-        for(int i = 0; i < genes.length; i++){
-            Note[] currentChord = (Note[]) genes[i].getAllele();
-            if(HarmonicUtils.isValidChord(currentChord, scale, tonic))
-                result+= 1/(genes.length*1.0);
+        
+        for(Gene g : genes){
+            Note[] chord = (Note[]) g.getAllele();
+            int[] foundChord = HarmonicUtils.findChord(chord, tonic, scale);
+            if(foundChord != null)
+                if(HarmonicUtils.isFundamentalDuplicated(chord, foundChord))
+                    result+= 1/(genes.length*1.0);
         }
-            
+        
         
         return result;
     }
+    
+    
 
     @Override
     public String getName() {
-       return "Valid chords rule";
+        return "Duplicate Fundamental Rule";
     }
     
 }

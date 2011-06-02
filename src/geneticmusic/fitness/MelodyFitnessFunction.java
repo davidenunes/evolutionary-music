@@ -4,15 +4,12 @@
  */
 package geneticmusic.fitness;
 
-import geneticmusic.rulesInConstruction.PausesAfterShortNotes;
-import geneticmusic.rulesInConstruction.NoteDensityRule;
 import geneticmusic.rules.RithmContinuity;
 import geneticmusic.rules.MelodyContinuity;
 import geneticmusic.rules.InScaleRule;
 import geneticmusic.domain.Alteration;
 import geneticmusic.domain.Note;
 import geneticmusic.domain.Pitch;
-import java.util.LinkedList;
 import jm.constants.Durations;
 import jm.constants.Scales;
 
@@ -45,8 +42,7 @@ public class MelodyFitnessFunction extends AbstractCompositionFitness{
         
         
         
-        //config note density rule
-        CompositionRule densityRule = new NoteDensityRule(0.9, Durations.C); 
+      
         
         //rythmic variety rule
        
@@ -58,8 +54,6 @@ public class MelodyFitnessFunction extends AbstractCompositionFitness{
         
         
  
-        
-        PausesAfterShortNotes restsAfterShort = new PausesAfterShortNotes();
         
         //add the rules
         rules.add(inScale);

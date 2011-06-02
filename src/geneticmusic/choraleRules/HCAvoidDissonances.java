@@ -33,6 +33,8 @@ public class HCAvoidDissonances extends AbstractCompositionRule{
         for(int i = 0; i< genes.length; i++){
             Note[] currentChord = (Note[]) genes[i].getAllele();
             
+            
+            
             double distanceSA = Math.abs(currentChord[0].distance(currentChord[1]));
             double distanceAT = Math.abs(currentChord[1].distance(currentChord[2]));
             double distanceTB = Math.abs(currentChord[2].distance(currentChord[3]));
@@ -57,6 +59,11 @@ public class HCAvoidDissonances extends AbstractCompositionRule{
         
         
         return result;
+    }
+
+    @Override
+    public String getName() {
+        return "Avoid Dissonances Rule";
     }
     
 }

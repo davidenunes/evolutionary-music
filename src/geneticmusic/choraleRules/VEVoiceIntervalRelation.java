@@ -68,5 +68,10 @@ public class VEVoiceIntervalRelation extends AbstractCompositionRule{
              result = Math.abs(firstNote.distance(secondNote)) <= 8;
          return result;
      }
+
+    @Override
+    public String getName() {
+        return "Voice Vertical Interval Rule";
+    }
     
 }

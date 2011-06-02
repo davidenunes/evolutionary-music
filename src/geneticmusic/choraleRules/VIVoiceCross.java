@@ -42,5 +42,10 @@ public class VIVoiceCross extends AbstractCompositionRule{
         
         return result;
     }
+
+    @Override
+    public String getName() {
+        return "No Voice Cross Rule";
+    }
     
 }

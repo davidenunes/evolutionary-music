@@ -28,6 +28,7 @@ import org.jgap.Genotype;
 import org.jgap.IChromosome;
 import org.jgap.InvalidConfigurationException;
 import org.jgap.UnsupportedRepresentationException;
+import org.jgap.audit.EvolutionMonitor;
 import org.jgap.impl.BestChromosomesSelector;
 import org.jgap.impl.DefaultConfiguration;
 import org.jgap.impl.TournamentSelector;
@@ -46,14 +47,22 @@ public class GeneticMusicChorale implements JMC {
 
         //configuration object
         Configuration cfg = new DefaultConfiguration();
-        FitnessFunction fitnessF = new ChoraleFitnessFunction();
+        ChoraleFitnessFunction fitnessF = new ChoraleFitnessFunction();
+        
+        
+         
+        
+//          EvolutionMonitor monitor = new EvolutionMonitor();
+//          cfg.setMonitor(monitor);
+          
+          
         cfg.setFitnessFunction(fitnessF);
 
 
         
         //**************create a sample cromossome************************
         
-        Gene[] sampleGenes = new Gene[4];
+        Gene[] sampleGenes = new Gene[8];
         for(int i=0; i< sampleGenes.length; i++)
             sampleGenes[i] = new ChoraleGene(cfg);
 
@@ -97,6 +106,7 @@ public class GeneticMusicChorale implements JMC {
         
        
          XYSeriesCollection dataset = new XYSeriesCollection(fitnessSeries);
+         XYSeriesCollection rulesDataset = fitnessF.getRuleDataset();
         
          
          JFreeChart fitnessChart = ChartFactory.createXYLineChart("Fittest Fitness Evolution", 
@@ -106,6 +116,15 @@ public class GeneticMusicChorale implements JMC {
                                                                 true, //legend
                                                                 true, //tooltips
                                                                 false); //url
+         
+         JFreeChart rulesChart = ChartFactory.createXYLineChart("Rule Average Evaluation", 
+                                                                "Generation", 
+                                                                "Fitness", rulesDataset, 
+                                                                PlotOrientation.VERTICAL,
+                                                                true, //legend
+                                                                true, //tooltips
+                                                                false); //url
+         
         
         //add chart to panel
        ChartPanel chartPanel = new ChartPanel(fitnessChart);
@@ -114,6 +133,15 @@ public class GeneticMusicChorale implements JMC {
        chartFrame.setContentPane(chartPanel);
        chartFrame.pack();
        chartFrame.setVisible(true);
+       
+       
+          //add chart to panel
+       ChartPanel rulesPanel = new ChartPanel(rulesChart);
+       JFrame rulesFrame = new JFrame("Rule Fitness");
+       rulesFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+       rulesFrame.setContentPane(rulesPanel);
+       rulesFrame.pack();
+       rulesFrame.setVisible(true);
         
         do{
             lastFitness = currentFitness;
@@ -125,7 +153,7 @@ public class GeneticMusicChorale implements JMC {
             i++;
             
             //System.out.println(i);
-        }while(i<1000);
+        }while(i<500);
         
        
        

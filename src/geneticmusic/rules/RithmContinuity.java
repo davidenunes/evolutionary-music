@@ -46,5 +46,10 @@ public class RithmContinuity implements CompositionRule{
         
         return weight*result;
     }
+
+    @Override
+    public String getName() {
+        return "Rithm Continuity Rule";
+    }
     
 }

@@ -5,6 +5,7 @@
 package geneticmusic.fitness;
 
 import geneticmusic.choraleRules.HCAvoidDissonances;
+import geneticmusic.choraleRules.HCDuplicateFundamental;
 import geneticmusic.choraleRules.HCValidChords;
 import geneticmusic.choraleRules.HRInScale;
 import geneticmusic.choraleRules.VEVoiceExtension;
@@ -32,19 +33,20 @@ public class ChoraleFitnessFunction extends AbstractCompositionFitness {
 
     @Override
     protected void configRules() {
-        double weight = 1/8.0;
+        double weight = 1/10.0;
         
         Note tonic = new Note(Pitch.C, 5, Alteration.N, 4);
         
         VEVoiceExtension verticalExtension = new VEVoiceExtension(weight);
         VEVoiceIntervalRelation verticalIntervalRelation = new VEVoiceIntervalRelation(weight);
-        HRInScale inScale = new HRInScale(Scales.MAJOR_SCALE, tonic, weight);
+        HRInScale inScale = new HRInScale(Scales.MAJOR_SCALE, tonic, weight*2);
         HCValidChords validChords = new HCValidChords(weight, Scales.MAJOR_SCALE, tonic);
         VIVoiceCross voiceCross = new VIVoiceCross(weight);
-        VLMelodyContinuity melodyConsistency = new VLMelodyContinuity(weight);
-        VLMediumVoicesContinuity mediumVoices = new VLMediumVoicesContinuity(weight);
-        HCAvoidDissonances avoidDissonances = new HCAvoidDissonances(weight);
+        VLMelodyContinuity melodyConsistency = new VLMelodyContinuity(weight*2);
+        VLMediumVoicesContinuity mediumVoices = new VLMediumVoicesContinuity(weight*1.1);
+        HCAvoidDissonances avoidDissonances = new HCAvoidDissonances(weight*2);
         VIParallelism parallelism = new VIParallelism(weight);
+        HCDuplicateFundamental duplicateFundamental = new HCDuplicateFundamental(weight*2, tonic, Scales.MAJOR_SCALE);
         
         addRule(verticalExtension);//add rule to rule set
         addRule(verticalIntervalRelation);
@@ -54,7 +56,8 @@ public class ChoraleFitnessFunction extends AbstractCompositionFitness {
         addRule(melodyConsistency);
         addRule(mediumVoices);
         addRule(avoidDissonances);
-       // addRule(parallelism);
+        addRule(parallelism);
+        addRule(duplicateFundamental);
     }
     
 }

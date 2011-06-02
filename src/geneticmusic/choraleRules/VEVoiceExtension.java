@@ -95,4 +95,9 @@ public class VEVoiceExtension extends AbstractCompositionRule {
         }
         return result;
     }
+
+    @Override
+    public String getName() {
+        return "Voice Extension Rule";
+    }
 }

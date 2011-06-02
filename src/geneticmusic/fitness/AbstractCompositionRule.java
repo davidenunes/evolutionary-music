@@ -23,7 +23,9 @@ public abstract class AbstractCompositionRule implements CompositionRule{
     
     
     protected abstract double evaluation(IChromosome ic);
-    
+
+    @Override
+    public abstract String getName();
     
     
     @Override

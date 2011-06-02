@@ -60,4 +60,9 @@ public class VLMediumVoicesContinuity extends AbstractCompositionRule {
 
 
     }
+
+    @Override
+    public String getName() {
+        return "Other Voices Continuity Rule";
+    }
 }

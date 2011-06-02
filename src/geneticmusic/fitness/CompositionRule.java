@@ -11,5 +11,7 @@ import org.jgap.IChromosome;
  * @author davide
  */
 public interface CompositionRule{
-    public double evaluate(IChromosome ic);    
+    public double evaluate(IChromosome ic);
+
+    public String getName();
 }

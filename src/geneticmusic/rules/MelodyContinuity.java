@@ -54,4 +54,9 @@ public class MelodyContinuity implements CompositionRule {
         
         return weight*result;
     }
+
+    @Override
+    public String getName() {
+        return "Melody Continuity Rule";
+    }
 }

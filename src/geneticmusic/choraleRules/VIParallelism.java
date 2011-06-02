@@ -58,5 +58,10 @@ public class VIParallelism extends AbstractCompositionRule{
         
         return result;
     }
+
+    @Override
+    public String getName() {
+        return "No Parallelism Rule";
+    }
     
 }

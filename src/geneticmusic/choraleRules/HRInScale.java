@@ -66,4 +66,9 @@ public class HRInScale extends AbstractCompositionRule implements JMC {
 
         return result;
     }
+
+    @Override
+    public String getName() {
+        return "In Scale Rule";
+    }
 }
