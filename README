@@ -4,6 +4,7 @@ Summary:
 External libraries used:
 	1. JGAP - http://jgap.sourceforge.net/
 	2. JMUSIC - http://jmusic.ci.qut.edu.au/
+	3. JFREECHART - http://www.jfree.org/jfreechart/
 	
 Note: the current package offers a bridge between these two libraries 
 as one may benefit from using JMUSIC analysis capabilities to construct 
