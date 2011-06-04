@@ -27,11 +27,16 @@ import org.jgap.Gene;
 import org.jgap.Genotype;
 import org.jgap.IChromosome;
 import org.jgap.InvalidConfigurationException;
+import org.jgap.Population;
 import org.jgap.UnsupportedRepresentationException;
 import org.jgap.audit.EvolutionMonitor;
 import org.jgap.impl.BestChromosomesSelector;
+import org.jgap.impl.CrossoverOperator;
 import org.jgap.impl.DefaultConfiguration;
+import org.jgap.impl.GABreeder;
+import org.jgap.impl.MutationOperator;
 import org.jgap.impl.TournamentSelector;
+import org.jgap.impl.WeightedRouletteSelector;
 
 /**
  *
@@ -44,23 +49,38 @@ public class GeneticMusicChorale implements JMC {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws InvalidConfigurationException, UnsupportedOperationException, UnsupportedRepresentationException {
-
+        System.out.println("GA configuration:");
         //configuration object
         Configuration cfg = new DefaultConfiguration();
-        ChoraleFitnessFunction fitnessF = new ChoraleFitnessFunction();
-        
-        
-         
-        
-//          EvolutionMonitor monitor = new EvolutionMonitor();
-//          cfg.setMonitor(monitor);
-          
-          
+        ChoraleFitnessFunction fitnessF = new ChoraleFitnessFunction();        
         cfg.setFitnessFunction(fitnessF);
 
-
+   
+       
+      
         
-        //**************create a sample cromossome************************
+       
+      
+        cfg.removeNaturalSelectors(true);
+       // cfg.addNaturalSelector(new WeightedRouletteSelector(cfg), true); 
+        //cfg.addNaturalSelector(new BestChromosomesSelector(cfg,0.7), true);
+        cfg.addNaturalSelector(new TournamentSelector(cfg, 3, 0.7), true);
+       cfg.setKeepPopulationSizeConstant(true);
+        System.out.println("Selection Operator: " + cfg.getNaturalSelector(true, 0));
+        
+        
+        System.out.println("Crossover: "+ cfg.getGeneticOperators().get(0).toString() );
+        
+        //set population size
+        cfg.setPopulationSize( 40 );
+        
+        //set note generator
+        cfg.setRandomGenerator(new NoteGenerator());
+        
+        
+        
+        
+                //**************create a sample cromossome************************
         
         Gene[] sampleGenes = new Gene[8];
         for(int i=0; i< sampleGenes.length; i++)
@@ -72,20 +92,6 @@ public class GeneticMusicChorale implements JMC {
         Chromosome sampleChromosome = new Chromosome(cfg, sampleGenes);
 
         cfg.setSampleChromosome(sampleChromosome);
-        //***************************************************************
-        
-        System.out.println("GA configuration:");
-        System.out.println("Percentage selected from previous generations:"+cfg.getSelectFromPrevGen());
-        //cfg.setNaturalSelector(new BestChromosomesSelector(cfg, 1));
-        cfg.setNaturalSelector(new TournamentSelector(cfg, 20, 0.7));
-        System.out.println("Selection Operator: " + cfg.getNaturalSelector());
-        
-        
-        //set population size
-        cfg.setPopulationSize( 40 );
-        
-        //set note generator
-        cfg.setRandomGenerator(new NoteGenerator());
         
         
         //construct a population genotype
@@ -109,7 +115,7 @@ public class GeneticMusicChorale implements JMC {
          XYSeriesCollection rulesDataset = fitnessF.getRuleDataset();
         
          
-         JFreeChart fitnessChart = ChartFactory.createXYLineChart("Fittest Fitness Evolution", 
+         JFreeChart fitnessChart = ChartFactory.createXYLineChart("Average Fitness Evolution", 
                                                                 "Generation", 
                                                                 "Fitness", dataset, 
                                                                 PlotOrientation.VERTICAL,
@@ -128,7 +134,7 @@ public class GeneticMusicChorale implements JMC {
         
         //add chart to panel
        ChartPanel chartPanel = new ChartPanel(fitnessChart);
-       JFrame chartFrame = new JFrame("Fittests Fitness");
+       JFrame chartFrame = new JFrame("Average Fitness");
        chartFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
        chartFrame.setContentPane(chartPanel);
        chartFrame.pack();
@@ -148,7 +154,7 @@ public class GeneticMusicChorale implements JMC {
             population.evolve();
             currentFitness = population.getFittestChromosome().getFitnessValue();
             
-            fitnessSeries.add(i, currentFitness);//update series
+            fitnessSeries.add(i, getAVGFitness(population));//update series
             //System.out.println("Current fitness: "+currentFitness);
             i++;
             
@@ -167,5 +173,15 @@ public class GeneticMusicChorale implements JMC {
         
 
 
+    }
+    
+    private static double getAVGFitness(Genotype p){
+        
+        double sum = 0.0;
+        for(IChromosome c: p.getChromosomes()){
+            sum += c.getFitnessValue();
+        }
+        return (sum / p.getPopulation().size());
+    
     }
 }

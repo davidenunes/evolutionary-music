@@ -41,11 +41,11 @@ public class ChoraleFitnessFunction extends AbstractCompositionFitness {
         VEVoiceIntervalRelation verticalIntervalRelation = new VEVoiceIntervalRelation(weight);
         HRInScale inScale = new HRInScale(Scales.MAJOR_SCALE, tonic, weight*2);
         HCValidChords validChords = new HCValidChords(weight, Scales.MAJOR_SCALE, tonic);
-        VIVoiceCross voiceCross = new VIVoiceCross(weight);
-        VLMelodyContinuity melodyConsistency = new VLMelodyContinuity(weight*2);
-        VLMediumVoicesContinuity mediumVoices = new VLMediumVoicesContinuity(weight*1.1);
+        VIVoiceCross voiceCross = new VIVoiceCross(weight*1);
+        VLMelodyContinuity melodyConsistency = new VLMelodyContinuity(weight*2.2);
+        VLMediumVoicesContinuity mediumVoices = new VLMediumVoicesContinuity(weight*1);
         HCAvoidDissonances avoidDissonances = new HCAvoidDissonances(weight*2);
-        VIParallelism parallelism = new VIParallelism(weight);
+        VIParallelism parallelism = new VIParallelism(weight*1);
         HCDuplicateFundamental duplicateFundamental = new HCDuplicateFundamental(weight*2, tonic, Scales.MAJOR_SCALE);
         
         addRule(verticalExtension);//add rule to rule set
