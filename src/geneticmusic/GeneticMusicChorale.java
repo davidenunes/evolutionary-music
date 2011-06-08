@@ -84,7 +84,7 @@ public class GeneticMusicChorale implements JMC {
 
         System.out.println("GA configuration:");
         System.out.println("population size: " + populationSize);
-        System.out.println("chromossome size: " + populationSize);
+        System.out.println("chromossome size: " + chromossomeSize);
         System.out.println("number of generations: " + populationSize);
         System.out.println("selection operator: " + populationSize);
         
