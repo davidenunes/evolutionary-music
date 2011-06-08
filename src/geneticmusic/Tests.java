@@ -9,7 +9,7 @@ import geneticmusic.domain.Note;
 import geneticmusic.domain.Pitch;
 import geneticmusic.jmusic.bridge.ConverterUtil;
 import geneticmusic.jmusic.bridge.HarmonicUtils;
-import geneticmusic.rules.RithmContinuity;
+import geneticmusic.melodyRules.RithmContinuity;
 import javax.xml.datatype.Duration;
 import jm.JMC;
 import jm.constants.Durations;

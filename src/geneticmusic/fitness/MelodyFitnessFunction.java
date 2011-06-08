@@ -4,9 +4,9 @@
  */
 package geneticmusic.fitness;
 
-import geneticmusic.rules.RithmContinuity;
-import geneticmusic.rules.MelodyContinuity;
-import geneticmusic.rules.InScaleRule;
+import geneticmusic.melodyRules.RithmContinuity;
+import geneticmusic.melodyRules.MelodyContinuity;
+import geneticmusic.melodyRules.InScaleRule;
 import geneticmusic.domain.Alteration;
 import geneticmusic.domain.Note;
 import geneticmusic.domain.Pitch;

@@ -11,7 +11,11 @@ as one may benefit from using JMUSIC analysis capabilities to construct
 Fitness functions to be used in JGAP.
 
 Documentation: 
-	The documentation on the project is being generated and will be available soon
+	User Instructions are available in the UserInstructions.pdf document
+	
+DemoPackage
+	A user demo package was provided, download the folder UserDemoPackage
+	Read the User Instructions for more information.
 
 
 
